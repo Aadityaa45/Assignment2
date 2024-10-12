@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Portfolio</title>
+    <style>
+           *{
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;  /*it is related to the size of the borders of elements*/
+}
+body{
+    /*background-color: #0c0014;*/
+}
+.topview{
+    background-image: url("https://img.freepik.com/premium-photo/stocks-market-graph-chart-computer-screen_1001076-421.jpg");
+    background-size: cover;
+    background-position: center;  /* Centers the image within the container */
+    background-repeat: no-repeat; 
+    width: 100%;
+    height: 600px;
+    box-shadow:rgba(112, 144, 176, 0.15) 0px 10px 18px 0px;
+}
+#logo{
+    background-size: contain;
+    height: 150px;
+    width: 300px;
+}
+.navoptions{
+    color: white;
+}
+.leftnav{
+    display: flex;
+    align-items: center;
+    justify-content:space-between ;
+    height: 100px;
+    width: 60%;
+}
+.rightnav{
+    position: relative;
+    left: 500px;
+}
+.navigation{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+.wallet{
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center;
+    margin-left: 250px;
+    height: 40px;
+    width: 120px;
+    border-radius: 10px;
+    border: 1px solid white;
+    color: white;
+    font-weight: bold;
+}
+.navoptions:hover{
+    background-color:#a7734b;
+    border-radius: 5px;
+    cursor: pointer;
+}
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #totalBalance {
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .input-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 60%;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <section class="topview">
+        <div class="navigation">
+            <div class="leftnav">
+                <img id="logo" src="goldenlogo.png">
+                <h2 class="navoptions">Home</h2>
+                <h2 class="navoptions">Stocks</h2>
+                <h2 class="navoptions">Past trends</h2>
+                <h2 class="navoptions">Market Compare</h2>
+            </div>
+            <div class="wallet">wallet</div>
+        </div>
+    <div class="container">
+        <h1>Your Wallet Portfolio</h1>
+        <div id="totalBalance">₹0</div>
+        <div class="input-container">
+            <input type="number" id="amountToAdd" placeholder="Enter amount to add" min="1">
+            <button onclick="addMoney()">Add Money</button>
+        </div>
+        <table id="portfolioTable">
+            <thead>
+                <tr>
+                    <th>Stock Name</th>
+                    <th>Quantity</th>
+                    <th>Price (₹)</th>
+                    <th>Sell</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Portfolio items will be injected here -->
+            </tbody>
+        </table>
+        <div class="button-container">
+            <button onclick="window.location.href='stocksection.html'">Back to Stock Market</button>
+        </div>
+    </div>
+
+    <script>
+        // Load portfolio and balance from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            loadPortfolio();
+        });
+
+        function loadPortfolio() {
+            // Load total balance from localStorage
+            let totalBalance = localStorage.getItem('totalBalance') ? parseInt(localStorage.getItem('totalBalance')) : 10000; // Default balance if not set
+            document.getElementById("totalBalance").innerText = `₹${totalBalance}`;
+
+            // Load portfolio from localStorage
+            let portfolio = JSON.parse(localStorage.getItem('portfolio')) || {};
+            const portfolioTable = document.getElementById("portfolioTable").getElementsByTagName("tbody")[0];
+            portfolioTable.innerHTML = ""; // Clear existing rows
+
+            for (const stock in portfolio) {
+                const row = portfolioTable.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
+                
+                cell1.innerHTML = stock;
+                cell2.innerHTML = portfolio[stock].quantity;
+                cell3.innerHTML = `₹${portfolio[stock].price}`;
+                
+                // Add a sell button
+                cell4.innerHTML = `<button onclick="sellStock('${stock}')">Sell</button>`;
+            }
+        }
+
+        function addMoney() {
+            const amountInput = document.getElementById("amountToAdd");
+            const amountToAdd = parseInt(amountInput.value);
+
+            if (!amountToAdd || amountToAdd <= 0) {
+                alert("Please enter a valid amount to add.");
+                return;
+            }
+
+            // Update balance
+            let currentBalance = localStorage.getItem('totalBalance') ? parseInt(localStorage.getItem('totalBalance')) : 10000; // Default balance
+            currentBalance += amountToAdd;
+            localStorage.setItem('totalBalance', currentBalance);
+            amountInput.value = ""; // Clear input field
+            loadPortfolio(); // Refresh the displayed balance
+        }
+
+        function sellStock(stockName) {
+            let portfolio = JSON.parse(localStorage.getItem('portfolio')) || {};
+            let totalBalance = parseInt(localStorage.getItem('totalBalance'));
+
+            if (portfolio[stockName]) {
+                const stock = portfolio[stockName];
+
+                if (stock.quantity > 0) {
+                    // Sell 1 unit at the current price
+                    totalBalance += stock.price; // Increase wallet balance by the price of the stock
+                    stock.quantity -= 1; // Decrease the quantity
+
+                    // If quantity reaches 0, remove the stock from the portfolio
+                    if (stock.quantity === 0) {
+                        delete portfolio[stockName];
+                    }
+
+                    // Save the updated portfolio and balance
+                    localStorage.setItem('portfolio', JSON.stringify(portfolio));
+                    localStorage.setItem('totalBalance', totalBalance);
+
+                    alert(`Sold 1 unit of ${stockName}. ₹${stock.price} added to your wallet.`);
+                    loadPortfolio(); // Refresh the portfolio table
+                } else {
+                    alert("No more units of this stock to sell.");
+                }
+            } else {
+                alert("You do not own this stock.");
+            }
+        }
+    </script>
+</body>
+</html>

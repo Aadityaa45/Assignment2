@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockStack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="stockmarket.css">
+</head>
+<body>
+    <header>
+        <section class="topview">
+        <div class="navigation">
+            <div class="leftnav">
+                <img id="logo" src="goldenlogo.png">
+                <h2 class="navoptions" id="homeid">Home</h2>
+                <h2 class="navoptions">Stocks</h2>
+                <h2 class="navoptions">Past trends</h2>
+                <h2 class="navoptions">Market Compare</h2>
+            </div>
+            <div class="wallet">wallet</div>
+        </div>
+        <h1 class="head1">Trade & Track with </h1>
+        <h1 class="head2"> StockStack:</h1>
+        <h1 class="head3">Empowering Your Investment<br>Journey</h1>
+        <p class="headpara">Buy, Sell, and Compare Stocks— <br>Navigate the market with confidence and control!</p>
+        <input type="button" class="startednow" onclick="openpopup()" value="Get Started">
+        </section>
+        <div class="popup" id="popup">
+            <h1 class="pophead">Open Demat Account</h1>
+            <input type="text" class="contact" id="mobile" placeholder="Enter mobile number" required>
+            <input type="tel" class="name" id="name" placeholder="Enter name" required>
+            <p>By proceeding you're agreing to our<a href="#">Terms and conditions</a></p>
+            <input type="button" class="dematebtn" value="Open Demate Account" onclick="validateInputs()">
+        
+            <div class="dematesuccess" id="successdemate">
+                <img src="greentick.png">
+                <h2 class="successhead">Your Demate account is succesfully opened</h2>
+                <input type="button" class="successbtn" value="Go Back!" onclick="closesuccessdemate()">
+            </div>
+        </div>
+    </header>
+    <section id="about-us" class="about-us-section">
+        <div class="about-container">
+            <h2 class="about-title">About StockStack</h2>
+            <p class="about-text">At <span class="highlight">StockStack</span>, we simplify your investment journey by offering a powerful platform to compare, analyze, and track stock markets in one place. Whether you're a seasoned trader or a beginner, we bring you real-time insights, personalized portfolio tracking, and detailed historical data to help you make informed decisions.</p>
+            <p class="about-text">Our mission is to empower you with the tools to stay ahead in the fast-paced world of stocks. With intuitive charts, platform comparisons, and up-to-date market trends, we’re your go-to source for all things stock market.</p>
+            <p class="about-tagline">Build your stack of success with StockStack!</p>
+            <button class="learn-more-btn" onclick="showMore()">Learn More</button>
+        </div>
+    </section>
+    <section class="testimonials-section">
+        <h2 class="testimonials-title">What Our Users Say</h2>
+
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <h4>Aaditya joshi</h4>
+                <p>"StockStack has completely transformed the way I invest! The insights and tools are invaluable for making informed decisions."</p>
+                <div class="user-rating">
+                    <span class="rating">★★★★☆</span>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <h4>Rohit SHarma</h4>
+                <p>"As a beginner, I found StockStack incredibly user-friendly. The tutorials and resources helped me navigate the stock market with confidence."</p>
+                <div class="user-rating">
+                    <span class="rating">★★★★★</span>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <h4>Harsh Sharma</h4>
+                <p>"The real-time data provided by StockStack is top-notch! I can track my investments effortlessly and make timely decisions."</p>
+                <div class="user-rating">
+                    <span class="rating">★★★★☆</span>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <h4>Chandan Sharma</h4>
+                <p>"I love how StockStack combines data analysis with a community of traders. The forums are a great place to share insights!"</p>
+                <div class="user-rating">
+                    <span class="rating">★★★★★</span>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <h4>Shanti Vatika</h4>
+                <p>"The customer service is exceptional! They are always ready to help with any questions I have about using the platform."</p>
+                <div class="user-rating">
+                    <span class="rating">★★★★☆</span>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <h4>Meenal Dave</h4>
+                <p>"StockStack's analysis tools have helped me grow my portfolio significantly. Highly recommend it to any serious investor!"</p>
+                <div class="user-rating">
+                    <span class="rating">★★★★★</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        let popup = document.getElementById("popup");
+        let success = document.getElementById("successdemate");
+
+        function validateInputs() {
+            let mobile = document.getElementById("mobile").value;
+            let name = document.getElementById("name").value;
+
+            // Check if both fields are filled
+            if (mobile === "" || name === "") {
+                alert("Please enter both mobile number and name");
+            } else {
+                successdemate(); // Proceed if both fields are valid
+            }
+        }
+
+        function openpopup(){
+            popup.classList.add("open-popup")
+        }
+
+        function opendemate(){
+            success.classList.add("open-success")
+        }
+
+        function closesuccessdemate(){
+            success.classList.remove("open-success")
+            popup.classList.remove("open-popup");
+        }
+
+        function successdemate(){
+            success.classList.remove("open-popup");
+            opendemate();
+        }
+
+        function showMore() {
+            alert("More exciting features and tools coming soon to StockStack!");
+        }
+    </script>
+</body>
+</html>
